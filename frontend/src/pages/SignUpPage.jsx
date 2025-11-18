@@ -16,7 +16,12 @@ const SignUpPage = () => {
   const {signup,isSigningUp}=useAuthStore();
 
   const validateForm = () => {
-     if (!formData.fullname.trim()) return toast.error("Username is required");
+       const name = formData.fullname.trim();
+    // allow only letters and spaces (basic validation)
+    const nameRegex = /^[A-Za-z\s]+$/;
+
+    if (!name) return toast.error("Full Name is required");
+    if (!nameRegex.test(name)) return toast.error("Full Name must contain only letters and spaces");
     if (!formData.email.trim()) return toast.error("Email is required");
     if (!/\S+@\S+\.\S+/.test(formData.email)) return toast.error("Invalid email format");
     if (!formData.password) return toast.error("Password is required");
